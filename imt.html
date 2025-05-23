@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator IMT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #aaa;
+    }
+    label, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    #hasil {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Kalkulator IMT</h2>
+
+  <label for="berat">Berat Badan (kg):</label>
+  <input type="number" id="berat" placeholder="Misal: 60">
+
+  <label for="tinggi">Tinggi Badan (cm):</label>
+  <input type="number" id="tinggi" placeholder="Misal: 170">
+
+  <button onclick="hitungIMT()">Hitung IMT</button>
+
+  <div id="hasil"></div>
+
+  <script>
+    function hitungIMT() {
+      const berat = parseFloat(document.getElementById("berat").value);
+      const tinggiCm = parseFloat(document.getElementById("tinggi").value);
+
+      if (!berat || !tinggiCm || berat <= 0 || tinggiCm <= 0) {
+        document.getElementById("hasil").innerText = "Mohon isi data dengan benar.";
+        return;
+      }
+
+      const tinggiM = tinggiCm / 100;
+      const imt = berat / (tinggiM * tinggiM);
+      let status = "";
+
+      if (imt < 18.5) status = "Kurus";
+      else if (imt < 25) status = "Normal";
+      else if (imt < 30) status = "Gemuk";
+      else status = "Obesitas";
+
+      document.getElementById("hasil").innerText =
+        `IMT Anda: ${imt.toFixed(2)} (${status})`;
+    }
+  </script>
+</body>
+</html>
