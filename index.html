@@ -2,71 +2,121 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kalkulator IMT</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f8f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       max-width: 400px;
-      margin: 40px auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #aaa;
-    }
-    label, input, button {
-      display: block;
       width: 100%;
-      margin-bottom: 15px;
     }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    #hasil {
+
+    label {
+      display: block;
+      margin-top: 15px;
       font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #219150;
+    }
+
+    .result {
+      margin-top: 20px;
       font-size: 18px;
-      margin-top: 10px;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h2>Kalkulator IMT</h2>
 
-  <label for="berat">Berat Badan (kg):</label>
-  <input type="number" id="berat" placeholder="Misal: 60">
+  <h1>Kalkulator IMT</h1>
+  <div class="container">
+    <label for="berat">Berat Badan (kg):</label>
+    <input type="number" id="berat" placeholder="contoh: 60">
 
-  <label for="tinggi">Tinggi Badan (cm):</label>
-  <input type="number" id="tinggi" placeholder="Misal: 170">
+    <label for="tinggi">Tinggi Badan (cm):</label>
+    <input type="number" id="tinggi" placeholder="contoh: 160">
 
-  <button onclick="hitungIMT()">Hitung IMT</button>
+    <button onclick="hitungIMT()">Hitung IMT</button>
 
-  <div id="hasil"></div>
+    <div class="result" id="hasil"></div>
+  </div>
+
+  <footer>
+    Dibuat oleh <strong>Irna Dewi Yuningsi</strong>
+  </footer>
 
   <script>
     function hitungIMT() {
       const berat = parseFloat(document.getElementById("berat").value);
-      const tinggiCm = parseFloat(document.getElementById("tinggi").value);
+      const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
 
-      if (!berat || !tinggiCm || berat <= 0 || tinggiCm <= 0) {
-        document.getElementById("hasil").innerText = "Mohon isi data dengan benar.";
+      if (!berat || !tinggi) {
+        document.getElementById("hasil").innerText = "Mohon isi semua kolom dengan benar.";
         return;
       }
 
-      const tinggiM = tinggiCm / 100;
-      const imt = berat / (tinggiM * tinggiM);
-      let status = "";
+      const imt = berat / (tinggi * tinggi);
+      let kategori = "";
 
-      if (imt < 18.5) status = "Kurus";
-      else if (imt < 25) status = "Normal";
-      else if (imt < 30) status = "Gemuk";
-      else status = "Obesitas";
+      if (imt < 18.5) {
+        kategori = "Kurus";
+      } else if (imt < 23) {
+        kategori = "Normal";
+      } else if (imt < 25) {
+        kategori = "Gemuk tingkat 1";
+      } else {
+        kategori = "Gemuk tingkat 2";
+      }
 
-      document.getElementById("hasil").innerText =
-        `IMT Anda: ${imt.toFixed(2)} (${status})`;
+      document.getElementById("hasil").innerHTML = 
+        `IMT kamu: <strong>${imt.toFixed(1)}</strong><br>Status: <strong>${kategori}</strong>`;
     }
   </script>
+
 </body>
 </html>
